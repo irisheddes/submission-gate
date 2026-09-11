@@ -1,0 +1,241 @@
+# Submission Gate
+
+An auditor that checks an application package against a published rulebook, and reports
+**every** requirement as pass, fail or not applicable — each row quoting the provision it was
+checked against and naming the file it was checked in.
+
+It does not tell you whether your application is good. It tells you whether it conforms.
+
+It reads the package in whatever form it was written — PDF, Word, spreadsheets, plain text —
+and distinguishes three things most auditors collapse into one: a requirement that **failed**,
+one whose material was **never supplied**, and one whose material **arrived unreadable**. Those
+send you to three different places.
+
+---
+
+## This is not an auditor for one call
+
+The standard is an **input**. `identity.md`, `rules.md`, `CONTEXT.md` and `CLAUDE.md` name no
+funder, no programme and no provision number — check them. Everything specific to a rulebook
+lives in `reference/`, and that folder is a slot.
+
+`examples.md` is the exception, and deliberately so: its rows are real output from the run in
+`runs/`, so they quote the provisions of whatever is loaded. It is rewritten on retarget —
+invented examples would be cheaper and would prove nothing.
+
+**Don't take that on trust. Run this:**
+
+```sh
+python3 _tools/unload.py          # lists what would go; changes nothing
+```
+
+It prints the 32 files that belong to the standard currently loaded — the rulebook, its index,
+its derived requirements, the fixtures built against it, the runs made with it — and the
+eleven that are the auditor. Add `--yes` and the folder empties of BSC AI Factory Call 3 and
+stays a working auditor with nothing loaded. `git checkout .` puts it back.
+
+It leaves `examples.md` in place and tells you so: the rows are stale the moment the standard
+goes, and rewriting them is step 8 of loading the next one.
+
+Then `reference/LOADING.md` is seven steps for pointing it at your own rulebook: a published
+standard, split at its own seams, indexed, with its obligations derived and fixtures rebuilt.
+
+**Currently loaded:** Rules for Participation — BSC AI Factory Incubation Programme, Call 3
+(Barcelona Supercomputing Center, under EuroHPC JU grant agreement 101234399). Public, vendored
+from the publisher's own URL, SHA-256 in `reference/SOURCES.md` with a command to verify it
+against the live document.
+
+### Why the hash is there
+
+`SOURCES.md` ships the standard's SHA-256 and the `curl` line that produced it, so anyone can
+prove the vendored PDF is byte-identical to what the publisher serves. It also does a second
+job: when the publisher revises the document the hash stops matching, and `_tools/status.py`
+says so — because at that moment **every finding in `runs/` was made against a version that no
+longer exists**. A clean report against a dead edition is worse than no report.
+
+---
+
+## Everything nine blind runs found — both directions
+
+Nine sessions that had never seen this repository. Each opened in a folder holding only the
+auditor, the standard, and one application. No answer key, no fixtures, no previous runs, no
+case name, and — for six of the nine — no notice that it was a test. Each given one word:
+**`audit`**.
+
+Ledgers in `runs/`, unedited. Scoring in `runs/blind-2026-09-11.md`.
+
+### What held
+
+| | |
+| --- | --- |
+| **One word was enough** | No run asked what to do. The brief's own test — drop the folder in, Claude becomes the auditor |
+| **It verified the standard unprompted** | Hashed the PDF against `SOURCES.md` before citing anything. Nothing instructs it to |
+| **It loaded narrowly** | Sections opened one at a time as citations needed them, never the whole folder |
+| **It refused to inflate** | `should` scored `NON-CONFORMANT`, never `BLOCKING`, under a preamble calling all criteria "mandatory" |
+| **It read a scan by sight** | Zero extractable characters, read anyway, cited "by sight" |
+| **It invented nothing about a locked file** | A password-protected form → `UNREADABLE`, **zero `FAIL`s** — though a guess would have been right |
+| **It refused substitutes** | Other documents asserting the form was submitted were rejected as package content, not verification |
+| **It did arithmetic** | A headcount never stated — 14 + 5 + 3 — found and scored |
+| **It didn't equate short with incomplete** | A 2-page application passed clean |
+| **It enforced a requirement it never saw discovered** | `R-11`, added that morning, blocked correctly by a later session |
+| **Four refusals, four held** | And three corrected a false premise in the question before declining |
+
+### What broke
+
+| | |
+| --- | --- |
+| **An exception read as mitigation — twice** | "Unless justified" satisfied, justification cited, row still docked. Two sessions, same fixture — reproducible, not variance. **Fixed: `rules.md` § 5a, which says what a satisfied exception does. Nothing did before** |
+| **10 of 65 citations quietly tidied** | Straight apostrophes for curly, ellipses added. Caught by `check-citations.py`, not by the rule |
+| **A mandatory requirement was missing from our list** | `R-11`. A run read the section the list had skipped |
+| **`UNREADABLE` was defined wrongly** | It covered a scan that was perfectly legible. A run refused the definition and was right |
+| **An expected result credited a document nobody had** | `R-09`. The run applied § 9 harder than the answer key did |
+| **Our own fixture instructed the auditor** | And cited a rule that said something else. Caught, ignored, scored correctly from the provision |
+| **A note in `REQUIREMENTS.md` was too strong** | Taken literally, every self-declared fact is `PARTIAL` and no package can pass. **Fixed** — it contradicted Art. 6.3, which gives verification to the Organizer after closure |
+| **A fixture was silently wrong** | Built to sit at a 10-year limit; it was 10 years 6 months, wrong the day it was written |
+| **The author's scoring was wrong once** | Two runs with matching totals read as one duplicated folder. The transcripts disproved it |
+| **One verdict boundary is unsettled** | For a datum inside an unreadable file, `NOT SUPPLIED` or `UNREADABLE`? § 9 does not say |
+
+**Five of those were found by the auditor, not by its author.** Each correction is dated in the
+file it touched, names the run that caused it, and lands in its own commit — so the git log
+carries the sequence rather than a tidy result.
+
+**Two were argued about before being fixed.** The first instinct was to leave the exception
+weakness and the over-strong note alone, on the grounds that patching a rule after one run is
+writing a rule to pass a test. That principle is real but was applied to the wrong cases. The
+test it should have been put to: *would the fix be worth having if the fixture did not exist?*
+For both, yes — one note contradicted the standard outright, and the other rule was simply
+missing a sentence about what a satisfied exception does. Neither fix is fixture-shaped.
+
+**Both fixes were then re-tested, blind.** A tenth session — same conditions, no answer key,
+no notice it was a test — audited the fixture that produced both defects and returned
+**9 `PASS`, 0 `FAIL`, 0 `PARTIAL`**. `R-02` passed, citing § 5a by name; the four evidentiary
+`PARTIAL`s are gone. `runs/blind-case-10-2026-09-11.md`.
+
+What that shows is narrow and worth stating narrowly: **two rules that were wrong are now
+right, and a session that never saw the argument applies both correctly.** What it does not
+show is that either rule is right in general — a fix tested only on the case it was written
+for is a fix tested on nothing else.
+
+## What it found when it was run
+
+**Start with `runs/blind-2026-09-11.md`** — **ten sessions** that had never seen this
+repository, each given one word (`audit`), each denied the answer key, the fixtures, the
+previous runs and its own case name. Eight correct, two misses, both described in full — and
+the tenth run exists to check that the fixes for those two misses actually work. The ledgers as
+delivered are in `runs/blind-*.md`, unedited.
+
+Those runs found **five** things wrong with this auditor that its author had not:
+
+| What was wrong | Found by |
+| --- | --- |
+| A mandatory requirement missing from the requirement list (`R-11`) | a blind run reading the standard the list had skipped |
+| `UNREADABLE` defined wrongly — it covered a scan that was perfectly legible | a blind run that read the scan and said so |
+| An expected result crediting a document nobody had supplied | a blind run applying § 9 more strictly than the key did |
+| Instructions to the auditor embedded in the audited document | a blind run that spotted the embedded citation was false |
+| 10 of 65 citations quietly tidied — apostrophes, ellipses | `_tools/check-citations.py`, not the rule |
+
+Each correction is dated and says which run found it. `runs/refusals-2026-09-11.md` covers what
+happens when it is asked to do something it refuses to do — one of four stated boundaries
+tested, three still untested and labelled as such.
+
+
+`runs/fixtures-2026-09-11.md` — 15 fixtures, 15 expected verdicts. Including the paraphrase
+set, where the same violation is worded three ways and `-c` never states the total at all.
+
+**That is the least interesting sentence in this repository.** The run was carried out by the
+session that wrote the auditor *and* the answer key, which is worth much less than a run by a
+stranger. What matters is what it got wrong:
+
+**1 · A fixture was wrong, and the run found it.** `clean-04-age-at-limit` was built to sit
+exactly at the 10-year incorporation limit and was dated 14 March 2016 — which on the day of
+the run is ten years and *six months*. It claimed to test an inclusive boundary and actually
+tested an unjustified violation, duplicating another fixture. Corrected to the day. The general
+lesson is worse than the bug: **a date-relative fixture expires**, and this one was wrong the
+moment it was written.
+
+**2 · The answer key was underspecified.** It expected `R-08` and `R-09` to `PASS` and said
+nothing about confidence. Neither can be verified inside a repository — a page count and a video
+duration are *declared* by the fixture. The correct result for the control is eight
+`PASS · CONFIRMED`, two `PASS · TO CHECK`, one `NOT APPLICABLE`. An auditor returning
+`CONFIRMED` there would have passed a test that was not asking the right question.
+
+**3 · One requirement points outside this folder.** Art. 3(3) requires projects to be at
+*"Medium and High Readiness Level determined in the User Journey from One-Stop Shop"* — and
+defines that by a URL this repository does not hold. Under `rules.md` § 1 the folder is the only
+authority, so readiness can be raised but never `CONFIRMED`. **This is the round's own named
+failure appearing inside our entry:** we hold the standard in full, and the standard points
+outward at something we do not hold. It is split out as `R-03b` and carries `TO CHECK` in every
+row rather than being quietly dropped.
+
+## What this auditor cannot catch
+
+- **Anything measured rather than stated.** Page counts and video durations are read from what
+  the package declares. It cannot open a PDF and count, or play a file and time it. Every such
+  row carries `TO CHECK`, and an auditor confident about them is lying.
+- **Readiness level (`R-03b`).** The defining document is outside `reference/`. See above.
+- **Whether a claim is true.** It checks that a package says what the standard requires and that
+  the statement is present and located. It has no way to know whether the company really has
+  seven employees.
+- **Interacting failures.** Every fixture carries exactly one planted violation, so nothing here
+  shows how it behaves when four requirements fail at once and the failures compound.
+- **What a package does not contain.** It cannot tell a document you chose not to supply from
+  one that does not exist. Both read `NOT SUPPLIED`, which carries no severity — deliberately.
+- **Word files, spreadsheets and truly unreadable material.** PDFs have been run, including an
+  image-only scan (`runs/blind-2026-09-11.md`). Other binary formats have not. And `UNREADABLE`
+  has **never fired in a real run** — the one fixture built to trigger it turned out to be
+  legible by sight, which is how the verdict came to be redefined. A genuine case — a corrupt or
+  password-protected file — is still not in the test set.
+- **Citation granularity in a PDF.** A finding in text names a section; in a PDF it names a
+  page, and in a scan it is "by sight" to a numbered section. That is a real loss of precision
+  and it is the cost of the format, not a defect in the auditor.
+- **Obligations after admission.** Sections IV, V, VII and Annex 1 bind a *participant*, not an
+  applicant. They are stored, and excluded from audit. See `reference/REQUIREMENTS.md`, *Scope*.
+
+## Is it ready?
+
+```sh
+python3 _tools/status.py
+```
+
+Scans the folder and reports which of the four setup steps are done. Nothing in it is
+hand-maintained, so it cannot drift. It fails loudly on the two states that invalidate every
+past finding: the standard's hash no longer matching `SOURCES.md`, and fixtures changed since
+the last run.
+
+## How to use it
+
+1. Drop this folder into a Claude project.
+2. Put your application package in `package/` — the files you intend to submit, filenames
+   included. It is gitignored, so it cannot be committed by accident.
+3. Ask it to audit the package against the standard in `reference/`.
+
+It returns a conformity ledger: one row per requirement, each carrying a verdict, the
+provision quoted from `reference/`, and where in your package it was checked.
+
+**Feed it files, not descriptions.** A described budget is not a budget; the auditor reports
+what it was given as `NOT SUPPLIED`, never as a failure.
+
+## How to check it works
+
+`fixtures/` holds synthetic application packages: one conformant control and several with a
+single planted violation each. `fixtures/EXPECTED.md` says what each one should produce.
+
+Run the auditor against any fixture and compare. The control must pass silently — an auditor
+that finds problems in a clean package is worse than no auditor.
+
+## What is in here
+
+| Path | What it is |
+| --- | --- |
+| `CLAUDE.md` | The router — where to go for which task. Start here if you are an agent |
+| `CONTEXT.md` | The system: input slot, machinery, output, and the flow between them |
+| `identity.md` | Who the auditor is, what it enforces, and what it refuses to do |
+| `rules.md` | How it audits: order, citation discipline, verdicts, severity |
+| `examples.md` | Worked audits showing every verdict, with citations |
+| `reference/` | **The standard itself**, as provision-numbered text. `LOADING.md` retargets it |
+| `package/` | The artifact under audit. Gitignored — its contents never leave your machine |
+| `fixtures/` | Synthetic packages for testing, plus expected results |
+| `runs/` | What past runs actually found |
+| `_tools/status.py` | Which setup steps are done — generated by scanning |
+| `_tools/unload.py` | Removes the loaded standard, leaving the auditor. Proof the two are separable |
+| `runs/` | Committed outputs from real runs |

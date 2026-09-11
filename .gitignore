@@ -1,0 +1,20 @@
+.DS_Store
+__pycache__/
+
+# ─────────────────────────────────────────────────────────────────────────
+# THE PACKAGE UNDER AUDIT — ignored by default.
+#
+# package/ holds one applicant's real submission: legal identity, finances,
+# CVs, unpublished technical work. It is the whole reason this auditor exists
+# and the last thing that should ever reach a public repository.
+#
+# Ignored here so that a clone worked in place CANNOT leak it with a careless
+# `git add .`. The folder's contract ships; its contents never do.
+# ─────────────────────────────────────────────────────────────────────────
+package/*
+!package/CONTEXT.md
+!package/.gitkeep
+
+# Cold-run ledgers carry numbers only, never package content — see runs/CONTEXT.md.
+# They ARE committed. Nothing to ignore here; this note exists so nobody adds one.
+_stage/
