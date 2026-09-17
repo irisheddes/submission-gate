@@ -29,6 +29,12 @@ curl -sL -o reference/<slug>.pdf "<publisher URL>"
 shasum -a 256 reference/<slug>.pdf
 ```
 
+**Then check that it is the latest edition.** Open the call's own page and look for other copies
+of the document. A publisher can upload a revised edition under a new address and leave the old
+one where it was, and then the old file still matches its own hash. It happened with the Call 3
+Rules loaded in this repository (`SOURCES.md`). Record every edition you find, and which one you
+vendored.
+
 The hash goes in `SOURCES.md` with a re-download command, so any reader can prove the vendored
 copy is byte-identical to what the publisher serves — and so a later reader can tell whether a
 clean report meant compliance or meant the folder was reading a version that no longer exists.

@@ -30,6 +30,28 @@ If the hashes differ, the publisher has revised the document and **every finding
 was made against a version that no longer exists.** Re-section the folder before auditing
 again. A clean report against a dead edition is the failure this page exists to prevent.
 
+**Matching hashes do not prove this is the latest edition.** It happened with this document.
+
+## A later edition exists — found 2026-09-17
+
+The publisher serves two PDFs with the same filename:
+
+| Upload path | PDF created | SHA-256 | Here |
+| --- | --- | --- | --- |
+| `/2026/07/` | 14 July 2026 | `efa748d788cfb86ba4454260774612c60cc8d6dfd94d42839cf9b7fb53734184` | **Vendored.** Every section file, the provision map, the fixtures and every run are bound to it |
+| `/2026/08/` | 3 August 2026 | `4de107b683ebffab8198459c1a6fd656ec40c162ce04fab8d745e27740be730f` | Not vendored |
+
+Compared word for word, they differ **only in the list of incubation sites**: "Guimarães
+(Portugal) – up to 12 Participants" in July is "Porto (Portugal) – up to 5 Participants" in
+August, in § I Art. 1(i) and in § III Art. 6.2. One line in Annex 1 Art. 15.1 is re-wrapped. The
+total in Art. 6.2, "thirty-six (36)", is unchanged, and so is every provision
+`REQUIREMENTS.md` derives a requirement from. Findings about applicant eligibility and the
+package are unaffected; anything citing the site list is July's.
+
+Found by a session that loaded the call from scratch and checked the call's own page rather than
+trusting the file it was given. The July copy is kept, and this is recorded, because swapping the
+edition means re-extracting, re-mapping and re-running everything bound to it.
+
 ## How the text was extracted, and a claim this page used to make that was wrong
 
 **The section files were extracted on 2026-09-17 with pdfplumber 0.11.9, and checked word for
