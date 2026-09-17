@@ -1,4 +1,11 @@
-# Fixture: broken-09-scanned — a package that cannot be read
+# Fixture: broken-09-scanned — a scan that must be read by sight
+
+> **Corrected 2026-09-17. The table and the section below it describe what this fixture was
+> built to expect, and that expectation was wrong.** A blind run on 2026-09-11 read the scan by
+> sight, and `../../rules.md` § 9 was redefined: a legible scan is read, not `UNREADABLE`. The
+> expected result is the control's, as `../EXPECTED.md` says. This page was not updated at the
+> time. `UNREADABLE` is now tested by `../broken-11-encrypted/`. What follows is kept as it was
+> written.
 
 **Cartulary is a fictional company.** Every fact here was invented for this repository.
 

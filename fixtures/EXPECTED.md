@@ -77,7 +77,7 @@ for the control**; a second finding is a false positive and fails that fixture.
 | `broken-07-non-eu` | `R-01` | `FAIL` · `BLOCKING` | § II Art. 3(1) |
 | `broken-08-onsite` | `R-06` | `FAIL` · `BLOCKING` | § II Art. 3(6) |
 | **`broken-10-no-acceptance`** | `R-11` | `FAIL` · `BLOCKING` | ACCEPTANCE OF THE RULES, PDF p12 |
-| **`broken-11-encrypted`** | `R-01`, `R-02`, `R-04`–`R-07` | **`UNREADABLE`**, no severity | the registration form is password-protected and cannot be opened by any means |
+| **`broken-11-encrypted`** | `R-01`, `R-02`, `R-04`–`R-07` | **`UNREADABLE`**, reason **`CANNOT OPEN`**, naming `registration-form.pdf`; no severity | the registration form is password-protected and cannot be opened by any means. *(The reason field was added to `rules.md` § 9 on 2026-09-17 and has not been run against this fixture yet)* |
 | **`broken-09-scanned`** | all rows | **Same as the control — read by sight, not `UNREADABLE`** | the registration form is an image-only scan, legible but not extractable |
 
 **The two that look alike and are not.** `broken-09-scanned` has no text layer and is perfectly

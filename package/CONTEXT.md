@@ -20,9 +20,11 @@ images, plain text. The auditor reads what it is given and never asks for a conv
 converted package is not the package, and the conversion is a step nobody has checked.
 
 Two honest caveats. A citation into a PDF is coarser than one into text — "around page 4"
-rather than a named section. And material that cannot be read takes `UNREADABLE`, not
-`NOT SUPPLIED` (`../rules.md` § 9): an image-only scan is a file you sent that did not arrive
-legible, not a file you failed to send, and the two send you to different places.
+rather than a named section. And a file that is here but cannot be opened or read takes
+`UNREADABLE`, never `NOT SUPPLIED` (`../rules.md` § 9): it is a file you sent that did not
+arrive usable, not a file you failed to send, and the two send you to different places. The
+row says whether it could not be opened or could not be made out. An image-only scan is
+neither: it is read by sight.
 
 ## This folder is never committed
 

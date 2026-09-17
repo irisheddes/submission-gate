@@ -9,7 +9,7 @@ available to an auditor.
 | | |
 | --- | --- |
 | **Requirements touched** | `R-01`, `R-02`, `R-04`, `R-05`, `R-06`, `R-07` — everything the registration form evidences |
-| **Expected verdict** | `UNREADABLE`. **Never `NOT SUPPLIED`, never `FAIL`** |
+| **Expected verdict** | `UNREADABLE`, reason `CANNOT OPEN`, naming `registration-form.pdf`. **Never `NOT SUPPLIED`, never `FAIL`** |
 | **Severity** | None. `UNREADABLE` carries no severity (`../rules.md` § 6) |
 
 ## Why this fixture exists

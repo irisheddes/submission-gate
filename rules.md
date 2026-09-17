@@ -52,7 +52,7 @@ One per requirement, and only these:
 | `PARTIAL` | Addressed, but short of what the provision states |
 | `NOT APPLICABLE` | The provision's own conditions do not apply to this applicant — quote the condition |
 | `NOT SUPPLIED` | The material needed to check this was not given to this run |
-| `UNREADABLE` | The material **was** given and could not be read **by any means available to you** — a corrupt file, a password you do not have, an illegible or blank page, a format that yields nothing to extraction *and* nothing to sight |
+| `UNREADABLE` | The material **was** given and could not be read **by any means available to you** — a corrupt file, a password you do not have, an illegible or blank page, a format that yields nothing to extraction *and* nothing to sight. The row names the file and gives the reason, `CANNOT OPEN` or `ILLEGIBLE` (§ 9) |
 
 ## 5a · A satisfied exception satisfies the requirement
 
@@ -111,6 +111,24 @@ missing**. It takes `NOT SUPPLIED`, carries no severity, and never grounds a blo
 
 **And a file you were given but could not read is neither.** A corrupt archive, a
 password-protected document, an illegible page — all take `UNREADABLE`, never `NOT SUPPLIED`.
+
+**The file is there, so it is never `NOT SUPPLIED`, and neither is anything inside it.** Where
+the material a requirement needs sits in a supplied file that cannot be opened or read, that
+requirement's row is `UNREADABLE` and names the file. `NOT SUPPLIED` is only for a document the
+standard requires that is not in the package at all.
+
+**Say which kind of unreadable, because the fix is different:**
+
+- **`CANNOT OPEN`** — the file will not open at all: a password you do not have, a corrupt file,
+  a format nothing available to you can open. The fix is to send it again, unlocked or
+  re-exported.
+- **`ILLEGIBLE`** — it opens, and the content cannot be made out by any means, sight included:
+  a blank page, a scan too blurred or cut off to read. The fix is a better copy.
+
+*Settled 2026-09-17. Until then this section did not say what a requirement takes when its
+material is inside a file that could not be read. The answer key already expected `UNREADABLE`
+there, and the blind run that met a locked file did exactly that. This writes it down. It has
+not yet been re-tested blind.*
 
 **`UNREADABLE` means you could not read it, not that one method failed.** A scanned page with
 no text layer extracts to nothing and is still perfectly legible by sight; read it and cite it,
@@ -202,8 +220,9 @@ and where the package falls short of it. What to write is the applicant's.
 
 ```
 [R-nn] · <the requirement, in one plain sentence>
-- Verdict:    PASS | FAIL | PARTIAL | NOT APPLICABLE | NOT SUPPLIED
+- Verdict:    PASS | FAIL | PARTIAL | NOT APPLICABLE | NOT SUPPLIED | UNREADABLE
 - Severity:   BLOCKING | NON-CONFORMANT | OBSERVATION      (FAIL and PARTIAL only)
+- Reason:     CANNOT OPEN | ILLEGIBLE — <which file, and what stopped it>  (UNREADABLE only)
 - Confidence: CONFIRMED | TO CHECK
 - Provision:  <section number as printed on the standard> — "<quoted verbatim, re-read this turn>"
 - Checked in: <file and place in the package>
@@ -216,7 +235,9 @@ Worked rows in this shape are in `examples.md`.
 
 1. Does every row quote a provision re-read this turn?
 2. Does every row name a location, or say `NOT SUPPLIED` / `UNREADABLE`?
-2a. Is anything marked `NOT SUPPLIED` that was actually supplied and unreadable?
+2a. Is anything marked `NOT SUPPLIED` that was actually supplied and unreadable, including a
+    requirement whose material is inside a file that would not open? Does every `UNREADABLE`
+    row name the file and give `CANNOT OPEN` or `ILLEGIBLE`?
 3. Are passes reported, not just failures?
 4. Is any `BLOCKING` row carrying `TO CHECK`? (Forbidden — fix it.)
 5. Did any row state a requirement that is not in `reference/`? (Remove it.)

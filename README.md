@@ -106,7 +106,7 @@ two corrections the judges found (the last rows of *What broke*) (`runs/blind-ca
 | **A note in `REQUIREMENTS.md` was too strong** | Taken literally, every self-declared fact is `PARTIAL` and no package can pass. **Fixed** — it contradicted Art. 6.3, which gives verification to the Organizer after closure |
 | **A fixture was silently wrong** | Built to sit at a 10-year limit; it was 10 years 6 months, wrong the day it was written |
 | **The author's scoring was wrong once** | Two runs with matching totals read as one duplicated folder. The transcripts disproved it |
-| **One verdict boundary is unsettled** | For a datum inside an unreadable file, `NOT SUPPLIED` or `UNREADABLE`? § 9 does not say |
+| **One verdict boundary was unsettled** | For a datum inside an unreadable file, `NOT SUPPLIED` or `UNREADABLE`? § 9 did not say. **Settled 2026-09-17:** the file is there, so the row is `UNREADABLE` and names it, with a required reason, `CANNOT OPEN` or `ILLEGIBLE`, because the fix differs. It writes down what the answer key and blind case 8 already did. **Not yet re-tested blind.** Also corrected: two pages still described an image-only scan as `UNREADABLE`, from before the 2026-09-11 redefinition |
 | **A fixture planted two things** | Case 11 (2026-09-17) found `broken-04-sector` contradicts itself: the form says logistics, and most of the Executive Summary still describes public administration, a priority sector. The run flagged it and declined to pick. **Fixed the same day:** the fixture's summary now describes freight logistics throughout, with `_build.py` checking it keeps every fact the other rows depend on. Blind case 12 ran the rebuilt fixture and found no contradiction |
 | **The answer key cited a rule that does not exist** | `EXPECTED.md` said `rules.md` § 7 requires `TO CHECK` for a page count the package only declares. § 7 does not say that. Cases 11 and 12 both returned `CONFIRMED` and were following § 7 as written. *(An earlier version of this row called that "a misreading of a correct rule". It was not.)* **Open.** Adding the rule means re-running the fixtures it can affect, so the key now says it is an expectation, not a rule. Case 12 also caught `REQUIREMENTS.md` misquoting Art. 3(3) ("or" for "and"). **Fixed** |
 | **The blind runs were not fully blind** | Staged inside the repository, so every case could read the `CLAUDE.md` that routes to the answer key. See the correction above. **Fixed:** staging moved outside, with a guard |
@@ -206,10 +206,11 @@ row rather than being quietly dropped.
 - **What a package does not contain.** It cannot tell a document you chose not to supply from
   one that does not exist. Both read `NOT SUPPLIED`, which carries no severity — deliberately.
 - **Word files, spreadsheets and truly unreadable material.** PDFs have been run, including an
-  image-only scan (`runs/blind-2026-09-11.md`). Other binary formats have not. And `UNREADABLE`
-  has **never fired in a real run** — the one fixture built to trigger it turned out to be
-  legible by sight, which is how the verdict came to be redefined. A genuine case — a corrupt or
-  password-protected file — is still not in the test set.
+  image-only scan (`runs/blind-2026-09-11.md`). Other binary formats have not. `UNREADABLE` has
+  fired once, on a password-protected form (case 8). It has not met a corrupt file, and the
+  `ILLEGIBLE` reason has never been exercised by any fixture. *(This line used to say
+  `UNREADABLE` had never fired and no locked file was in the test set. Both stopped being true on
+  2026-09-11.)*
 - **Citation granularity in a PDF.** A finding in text names a section; in a PDF it names a
   page, and in a scan it is "by sight" to a numbered section. That is a real loss of precision
   and it is the cost of the format, not a defect in the auditor.
