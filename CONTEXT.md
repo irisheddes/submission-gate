@@ -59,14 +59,16 @@ says what its folder holds, who reads it, and what a human checks before it is t
 
 | Folder | Its contract | Also holds |
 | --- | --- | --- |
-| `reference/` | `CONTEXT.md` — verbatim only, one standard at a time | `LOADING.md` (how to point this at a new rulebook), `SOURCES.md`, `INDEX.md`, `REQUIREMENTS.md` |
+| `reference/` | `CONTEXT.md` — verbatim only, one standard at a time | `LOADING.md` (how to point this at a new rulebook), `SOURCES.md`, `INDEX.md`, `PROVISIONS.md`, `REQUIREMENTS.md` |
 | `package/` | `CONTEXT.md` — any format, never committed | — |
 | `fixtures/` | `CONTEXT.md` — synthetic only, one violation each | `EXPECTED.md` (the answer key), `_build.py` |
 | `runs/` | `CONTEXT.md` — never edited after the fact | every ledger this auditor has produced |
 
-`_tools/` holds four scripts, each answering one question: is this ready (`status.py`), is the
-standard separable (`unload.py`), what does a blind run see (`stage.py`), and do the quotes
-resolve (`check-citations.py`).
+`_tools/` holds six scripts, each answering one question: is this ready (`status.py`), is the
+standard separable (`unload.py`), what does a blind run see (`stage.py`), does each quote
+resolve under the provision it is cited to (`check-citations.py`), does that check actually
+fail what it should (`test-citations.py`), and does the stored text match the PDF by two
+extractors (`check-extraction.py`).
 
 ## Inputs
 

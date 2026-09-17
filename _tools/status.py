@@ -32,6 +32,10 @@ if loaded:
     print(f"   retrieved     {read}   {url[:58]}")
     print(f"   public        {public}")
     print(f"   sections      {len(sections)} files")
+    pmap = REF/"PROVISIONS.md"
+    mapped = len(re.findall(r"^\| `[^`]+` \| `\d\d-", pmap.read_text(), re.M)) if pmap.exists() else 0
+    print(f"   provisions    {mapped} mapped in PROVISIONS.md" if mapped else
+          f"   {WARN} no PROVISIONS.md - quotes cannot be checked against the provision cited")
     pdf = next(REF.glob("*.pdf"), None)
     if pdf:
         h = hashlib.sha256(pdf.read_bytes()).hexdigest()
@@ -98,7 +102,7 @@ if dupes:
     for d in dupes[:6]:
         print(f"       {d.relative_to(R)}")
 
-ready = loaded and ids and dirs and fx and not dupes
+ready = loaded and mapped and ids and dirs and fx and not dupes
 print("\n" + "=" * 58)
 print("READY TO AUDIT" if ready else "NOT READY - see the unchecked steps above")
 print()

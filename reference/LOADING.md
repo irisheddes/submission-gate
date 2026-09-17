@@ -43,10 +43,25 @@ and "JURISDICITION"; both are kept. A citation that silently corrects its source
 citation, and a corrected excerpt is the clearest evidence that nobody checked it against the
 original.
 
-Insert page markers (`[pN]`) if the source paginates, and **say in each file's header that you
-inserted them.** Declared insertions are fine; undeclared ones are tampering.
+**Extract with two tools and reconcile them.** One extractor can invent text the document does
+not hold, and everything downstream then enforces the invention. This folder learned that the
+hard way: pypdf split `should` into `s hould`, moved two tables into the wrong sections, and
+this repository defended the splits as the PDF's own kerning for a week. The citation checker
+then rejected any run that quoted the PDF correctly. Judges found it by measuring the glyphs.
+See `SOURCES.md`.
 
-Each file's header carries: the source title, the edition, what was captured, and the date.
+So: extract with two tools built differently (here pdfplumber and pdftotext), compare them word
+for word on every page, and **where they disagree, look at the page** and keep what it prints.
+Never adopt one tool's output because it looks tidy, and never defend an oddity as "the source"
+until a second tool and the page agree. `../_tools/check-extraction.py` does the comparison and
+prints every disagreement. Write tables out one cell at a time, so a quoted cell stays whole.
+
+Insert page markers (`[pN]`) if the source paginates, and **say in each file's header that you
+inserted them.** Start each file with the marker for the page it begins on. Declared insertions
+are fine; undeclared ones are tampering.
+
+Each file's header carries: the source title, the edition, what was captured, the extractors
+used, and the date.
 
 ## 3 · Write `SOURCES.md`
 
@@ -57,13 +72,22 @@ page that answers "which version was this audit made against?" two years later.
 shipped as one; if a rendering helps, it sits beside the original, labelled, and is never
 cited.
 
-## 4 · Write `INDEX.md`
+## 4 · Write `INDEX.md` and `PROVISIONS.md`
 
 The section list, plus a **topic→section map** — "looking for who may apply → section 02". The
 map is what makes narrow loading possible; without it an agent opens files until it finds the
 right one, which is the whole cost the split was meant to avoid.
 
 State what is stored and what is not. "The whole document" is a valid answer and a useful one.
+
+**Then write `PROVISIONS.md`: every provision a finding could cite, mapped by hand to the file
+and the exact stretch of text that holds it.** `../_tools/check-citations.py` uses it to check
+that a quote sits under the provision it is cited to. Without the map it can only check that
+the quote is somewhere in the standard, so a row citing the wrong article passes. Write each
+row explicitly. Don't derive rows from filenames or page numbers, because documents break
+those rules: tables run over pages, clauses repeat numbers, articles get misnumbered. Then run
+`python3 ../_tools/test-citations.py`, after rewriting its cases in `../_tools/tests/citations/`
+to quote the new standard. It must show a neighbour swap and a non-existent provision failing.
 
 ## 5 · Derive `REQUIREMENTS.md`
 

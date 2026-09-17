@@ -12,6 +12,7 @@ outside it needs to change.
 | --- | --- |
 | `SOURCES.md` | The registry — title, publisher, edition, URL, date read, language, SHA-256 |
 | `INDEX.md` | Navigation — section list, topic map, and what is stored |
+| `PROVISIONS.md` | Navigation — each citable provision mapped to the exact stretch of its section file. Used by `../_tools/check-citations.py` to check a quote is under the provision it is cited to |
 | `REQUIREMENTS.md` | **Derived, not source.** The obligation list the auditor works from, each row citing the section it came from |
 | `LOADING.md` | The setup procedure for pointing this auditor at a different rulebook |
 | `<nn>-<slug>.md` | One file per section of the standard, verbatim |

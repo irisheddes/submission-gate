@@ -23,6 +23,8 @@ for p in sorted((R/"reference").iterdir()):
 for p in sorted((R/"fixtures").iterdir()):
     (stays if p.name in ("CONTEXT.md", "_build.py") else goes).append(p)
 goes += sorted((R/"runs").glob("*-*.md"))
+# The citation checker's test cases quote the loaded standard, so they leave with it.
+goes += sorted((R/"_tools"/"tests"/"citations").glob("*.md"))
 
 # Computed, not listed. A hand-maintained list of what survives goes stale the moment a file
 # is added, and this script's whole job is to make a claim checkable.
@@ -40,8 +42,8 @@ print("\nREMOVED - everything specific to the standard currently loaded")
 print("=" * 62)
 for p in goes:
     print(f"  {p.relative_to(R)}")
-print(f"\n  {len(goes)} files: the rulebook, its index, its derived requirements,")
-print("  the fixtures built against it, and the runs made with it.")
+print(f"\n  {len(goes)} files: the rulebook, its index and provision map, its derived")
+print("  requirements, the fixtures and citation tests built against it, and the runs made with it.")
 
 print("\nKEPT - the auditor")
 print("=" * 62)
