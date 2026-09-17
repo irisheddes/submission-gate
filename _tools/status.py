@@ -73,7 +73,10 @@ cold = sorted(RUNS.glob("cold-*.md")) if RUNS.exists() else []
 print(f"\n4. RUNS               {OK if fx else NO}")
 print(f"   fixture runs  {fx[-1].name if fx else 'none - the auditor is untested'}")
 print(f"   cold runs     {cold[-1].name if cold else 'none'}")
-if dirs and fx and fx[-1].stat().st_mtime < max(d.stat().st_mtime for d in dirs):
+# Only what an audit is given counts. A fixture's README is withheld from every run (stage.py), so
+# editing it cannot change a result; folder timestamps would still move, and warn for nothing.
+audited = [f for d in dirs for f in d.iterdir() if f.is_file() and f.name != "README.md"]
+if audited and fx and fx[-1].stat().st_mtime < max(f.stat().st_mtime for f in audited):
     print(f"   {WARN} fixtures changed after the last run. Re-run before trusting it.")
 
 # package - transient, never committed
