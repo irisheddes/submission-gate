@@ -29,9 +29,11 @@ invented examples would be cheaper and would prove nothing.
 python3 _tools/unload.py          # lists what would go; changes nothing
 ```
 
-It prints the 32 files that belong to the standard currently loaded — the rulebook, its index,
-its derived requirements, the fixtures built against it, the runs made with it — and the
-eleven that are the auditor. Add `--yes` and the folder empties of BSC AI Factory Call 3 and
+It prints the 51 files that belong to the standard currently loaded — the rulebook, its index
+and provision map, its derived requirements, the fixtures and citation tests built against it,
+the runs made with it — and the 20 that are the auditor. *(Until 2026-09-17 this said 32 and
+eleven. The script printed 41 and 17 at the time. The numbers had not been updated since the
+script was written.)* Add `--yes` and the folder empties of BSC AI Factory Call 3 and
 stays a working auditor with nothing loaded. `git checkout .` puts it back.
 
 It leaves `examples.md` in place and tells you so: the rows are stale the moment the standard
@@ -85,7 +87,7 @@ Ledgers in `runs/`, unedited. Scoring in `runs/blind-2026-09-11.md`.
 | | |
 | --- | --- |
 | **An exception read as mitigation — twice** | "Unless justified" satisfied, justification cited, row still docked. Two sessions, same fixture — reproducible, not variance. **Fixed: `rules.md` § 5a, which says what a satisfied exception does. Nothing did before** |
-| **10 of 65 citations quietly tidied** | Straight apostrophes for curly, ellipses added. Caught by `check-citations.py`, not by the rule |
+| **10 of 65 citations quietly tidied** | Straight apostrophes for curly, ellipses added. Caught by `check-citations.py`, not by the rule. *Re-checked 2026-09-17 against the corrected text below: still 10 of 65, for the same reasons* |
 | **A mandatory requirement was missing from our list** | `R-11`. A run read the section the list had skipped |
 | **`UNREADABLE` was defined wrongly** | It covered a scan that was perfectly legible. A run refused the definition and was right |
 | **An expected result credited a document nobody had** | `R-09`. The run applied § 9 harder than the answer key did |
@@ -94,10 +96,17 @@ Ledgers in `runs/`, unedited. Scoring in `runs/blind-2026-09-11.md`.
 | **A fixture was silently wrong** | Built to sit at a 10-year limit; it was 10 years 6 months, wrong the day it was written |
 | **The author's scoring was wrong once** | Two runs with matching totals read as one duplicated folder. The transcripts disproved it |
 | **One verdict boundary is unsettled** | For a datum inside an unreadable file, `NOT SUPPLIED` or `UNREADABLE`? § 9 does not say |
+| **A fixture planted two things** | Case 11 (2026-09-17) found `broken-04-sector` contradicts itself: the form says logistics, and most of the Executive Summary still describes public administration, a priority sector. The run flagged it and declined to pick. **Open.** The same run marked `R-08` `CONFIRMED` on a page count it said it had read from markdown |
+| **The split words were an extraction bug, and we defended them** | `SOURCES.md` said `s hould` and `Program me` were the PDF's own kerning, and kept them "exactly as extracted". The PDF prints `should`. pypdf invented 9 split words and 17 stray spaces, and moved two tables into the wrong sections. `check-citations.py` then rejected any run that quoted the PDF correctly. This broke our own rule that the PDF is the authority. **Found by the Comp 12 judges, who measured the glyphs. Fixed 2026-09-17:** re-extracted with pdfplumber, checked word for word against pdftotext (`_tools/check-extraction.py`). The false claim is quoted and corrected in `reference/SOURCES.md`, not deleted. Two blind runs had already reported one symptom, an empty timeline file, and nobody traced it to the extractor |
+| **The citation checker ignored the provision number** | It searched all of `reference/` for the quote. A citation changed from § II Art. 3(4) to 3(3), and then to 3(9), which does not exist, still passed. Half of `rules.md` § 2's double anchor was unguarded. **Found by the Comp 12 judges. Fixed 2026-09-17:** `reference/PROVISIONS.md` maps each provision to the exact text that holds it, and a quote must sit inside the provision it is cited to. `_tools/test-citations.py` proves that a neighbour swap, a non-existent provision and a broken map all fail. The old checker passed the first two |
 
-**Five of those were found by the auditor, not by its author.** Each correction is dated in the
-file it touched, names the run that caused it, and lands in its own commit — so the git log
-carries the sequence rather than a tidy result.
+**Six of those were found by the auditor, not by its author. The last two were found by the
+judges.** No check in this repository could have caught them: every check compared against the
+same wrong text, and the citation check tested only half of what the rule requires.
+`runs/recheck-2026-09-17.md` records how each fix was proved and what the corrected checker says
+about every earlier ledger. Each correction is dated in the file it touched, names the run or
+letter that found it, and lands in its own commit, so the git log shows the order things
+happened in.
 
 **Two were argued about before being fixed.** The first instinct was to leave the exception
 weakness and the over-strong note alone, on the grounds that patching a rule after one run is
@@ -124,7 +133,7 @@ previous runs and its own case name. Eight correct, two misses, both described i
 the tenth run exists to check that the fixes for those two misses actually work. The ledgers as
 delivered are in `runs/blind-*.md`, unedited.
 
-Those runs found **five** things wrong with this auditor that its author had not:
+Those runs found **five** things wrong with this auditor that its author had not. The judges found two more, after the round closed:
 
 | What was wrong | Found by |
 | --- | --- |
@@ -133,6 +142,8 @@ Those runs found **five** things wrong with this auditor that its author had not
 | An expected result crediting a document nobody had supplied | a blind run applying § 9 more strictly than the key did |
 | Instructions to the auditor embedded in the audited document | a blind run that spotted the embedded citation was false |
 | 10 of 65 citations quietly tidied — apostrophes, ellipses | `_tools/check-citations.py`, not the rule |
+| The standard's text held words the PDF does not: an extractor's splits, defended as the source's | the Comp 12 judges, measuring the PDF's glyphs |
+| The citation check ignored which provision a quote was cited to | the Comp 12 judges, changing a citation's number and leaving the quote alone |
 
 Each correction is dated and says which run found it. `runs/refusals-2026-09-11.md` covers what
 happens when it is asked to do something it refuses to do — one of four stated boundaries
@@ -238,4 +249,7 @@ that finds problems in a clean package is worse than no auditor.
 | `runs/` | What past runs actually found |
 | `_tools/status.py` | Which setup steps are done — generated by scanning |
 | `_tools/unload.py` | Removes the loaded standard, leaving the auditor. Proof the two are separable |
+| `_tools/check-citations.py` | Every quote verbatim, and under the provision it is cited to (`reference/PROVISIONS.md`) |
+| `_tools/test-citations.py` | Proves that check fails a neighbour swap, a non-existent provision and a broken map |
+| `_tools/check-extraction.py` | The stored text against the PDF, by two extractors, page by page |
 | `runs/` | Committed outputs from real runs |
