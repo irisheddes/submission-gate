@@ -1,12 +1,18 @@
 <!-- SOURCE: Rules for Participation — BSC AI Factory, Incubation Programme, Call 3.
      Edition: Call 3, published 2026-07 by Barcelona Supercomputing Center (BSC-CNS).
      Captured: this section, complete, from rules-for-participation.pdf, retrieved 2026-09-11.
+     Extracted 2026-09-17 with pdfplumber 0.11.9 and reconciled word for word, page by page,
+     against pdftotext (poppler 26.04.0); tables written out one cell at a time. This replaces
+     an earlier pypdf extraction that split words the PDF does not split — see SOURCES.md.
      Provenance and SHA-256: SOURCES.md · Section list: INDEX.md
      VERBATIM. Page markers [pN] are PDF page numbers, inserted so a citation can be checked
-     against the source. Nothing else is added; nothing is summarised, corrected or reworded —
-     including spelling as printed. -->
+     against the source: the first marker is the page this section starts on, each later one
+     is where that page begins. Running headers and footers are left out. Nothing else is
+     added; nothing is summarised, corrected or reworded — including spelling as printed. -->
 
 # SECTION V. CODE OF CONDUCT AND TERMINATION
+
+[p10]
 
 SECTION V. CODE OF CONDUCT AND TERMINATION
 Article 10. Code of Conduct
@@ -33,5 +39,3 @@ impacts the efficient allocation of shared resources.
 In the event of termination, exclusion, or voluntary withdrawal of a Participant, the Organizer reserves
 the right to replace the vacant position by selecting the next eligible company from the official waiting
 list corresponding to the relevant Incubation Site.
-
-[p11]

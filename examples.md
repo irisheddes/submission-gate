@@ -6,6 +6,9 @@ verdict and both confidence levels. The row shape is defined in `rules.md`, not 
 None of these is an invented illustration — each is a row the auditor produced against a
 fixture, reproducible by running it again.
 
+Two quotes here were corrected on 2026-09-17 to match the PDF, and each correction is noted
+under its row. The ledgers in `runs/` still hold them as they were delivered.
+
 ---
 
 ## `PASS` · `CONFIRMED` — a satisfied requirement, and where
@@ -61,11 +64,9 @@ The auditor cannot play a video. Saying so is the difference between an audit an
 - Verdict:    FAIL
 - Severity:   NON-CONFORMANT
 - Confidence: CONFIRMED
-- Provision:  § II Art. 3(5) — "The Company s hould belong to one of the AI Factory’s
+- Provision:  § II Art. 3(5) — "The Company should belong to one of the AI Factory’s
               priority sectors: Health, Agriculture & Climate, Finance & Legal, Policy
               Making & Public Administration, Communication & Media, Energy."
-              [reference/03-application-and-selection-procedure.md — Art. 3's table
-              continues past a page break into the next section's file]
 - Checked in: fixtures/broken-04-sector/registration-form.md § 3 · Sector —
               "Primary sector: Logistics & Freight Optimisation"
 - What falls short: Not one of the six named sectors. Not BLOCKING: the provision says
@@ -77,10 +78,18 @@ The auditor cannot play a video. Saying so is the difference between an audit an
 **The severity is the finding here.** Marking this `BLOCKING` would turn a stated preference
 into a rejection, which `rules.md` § 8 forbids.
 
-**And note "s hould".** The PDF's text layer breaks words at kerning boundaries, and the quote
-carries the break because that is what the source file says. An earlier version of this page
-tidied it to "should" — `_tools/check-citations.py` rejected it, which is the entire reason
-that script exists. A citation that has been cleaned up is no longer a citation.
+**And note the apostrophe.** The source prints a curly `’` in *AI Factory’s*. Five blind runs
+typed a straight one, and `_tools/check-citations.py` rejected every one of them. A citation
+that has been tidied is no longer a citation.
+
+*Corrected 2026-09-17.* This row used to quote "s hould", with a space in it, and the paragraph
+under it defended that split as the PDF's own kerning. **That was wrong.** The PDF prints
+"should". The split came from pypdf, the tool used to extract the text, and it went unnoticed
+because the checker compared quotes against that same extraction. The judges of Clief Notes
+Competition 12 measured the glyphs and found no gap. The row also said criterion 5's text was in
+the Section III file. That was pypdf too: it moved the last two rows of Art. 3's table there.
+The run's verdict and severity are unchanged; only the quoted text was corrected to match the
+PDF. See `reference/SOURCES.md`.
 
 ## `PASS` — where the provision carries its own exception
 
@@ -88,7 +97,7 @@ that script exists. A citation that has been cleaned up is no longer a citation.
 [R-02] · Between 0 and 10 years since legal incorporation, unless justified
 - Verdict:    PASS
 - Confidence: CONFIRMED
-- Provision:  § II Art. 3(2) — "Between 0 and 10 years since legal incorporation , unless
+- Provision:  § II Art. 3(2) — "Between 0 and 10 years since legal incorporation, unless
               justified (e.g. pivot, new AI product line, recent scale-down)."
 - Checked in: fixtures/broken-03-age-justified/registration-form.md — incorporated
               14 March 2013 (12 years 6 months), with § 2b · Note on corporate age
@@ -100,6 +109,9 @@ that script exists. A citation that has been cleaned up is no longer a citation.
 
 Reading the age limit without the rest of its own sentence produces a violation that does not
 exist. The fixture is named `broken-03` on purpose.
+
+*Corrected 2026-09-17: the quote used to read "incorporation , unless", with a space before the
+comma. pypdf put it there, not the PDF. See the note under `R-05` above.*
 
 ## `NOT APPLICABLE` — an optional document, absent
 
