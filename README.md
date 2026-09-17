@@ -29,11 +29,11 @@ invented examples would be cheaper and would prove nothing.
 python3 _tools/unload.py          # lists what would go; changes nothing
 ```
 
-It prints the 51 files that belong to the standard currently loaded — the rulebook, its index
+It prints every file that belongs to the standard currently loaded — the rulebook, its index
 and provision map, its derived requirements, the fixtures and citation tests built against it,
-the runs made with it — and the 20 that are the auditor. *(Until 2026-09-17 this said 32 and
-eleven. The script printed 41 and 17 at the time. The numbers had not been updated since the
-script was written.)* Add `--yes` and the folder empties of BSC AI Factory Call 3 and
+the runs made with it — and, separately, the files that are the auditor. *(This page used to
+give counts here. They did not match what the script printed, and any count goes stale the
+next time a run is added, so they are gone.)* Add `--yes` and the folder empties of BSC AI Factory Call 3 and
 stays a working auditor with nothing loaded. `git checkout .` puts it back.
 
 It leaves `examples.md` in place and tells you so: the rows are stale the moment the standard
@@ -60,7 +60,7 @@ longer exists**. A clean report against a dead edition is worse than no report.
 ## Everything nine blind runs found — both directions
 
 Nine sessions that had never seen this repository. Each opened in a folder holding only the
-auditor, the standard, and one application.
+auditor, the standard, and one application — or so this page said until the correction below.
 
 > **Correction, 2026-09-17: they were less blind than that sentence says.** The staged folders
 > sat inside this repository, and a session reads every `CLAUDE.md` above the folder it opens
@@ -68,11 +68,14 @@ auditor, the standard, and one application.
 > and `EXPECTED.md`, plus the instruction files of the author's workspace above it. Nothing in
 > any ledger shows a session opening the answer key, but nothing prevented it either. Found
 > while preparing this resubmission. `_tools/stage.py` now stages outside the repository and
-> refuses any folder with a `CLAUDE.md` or `AGENTS.md` above it. No answer key, no fixtures, no previous runs, no
-case name, and — for six of the nine — no notice that it was a test. Each given one word:
-**`audit`**.
+> refuses any folder with a `CLAUDE.md` or `AGENTS.md` above it.
 
-Ledgers in `runs/`, unedited. Scoring in `runs/blind-2026-09-11.md`.
+Inside the staged folder itself: no answer key, no fixtures, no previous runs, no case name, and
+— for six of the nine — no notice that it was a test. Each given one word: **`audit`**.
+
+Ledgers in `runs/`, unedited. Scoring in `runs/blind-2026-09-11.md`. A tenth run re-tested two
+fixes (`runs/blind-case-10-2026-09-11.md`), and an eleventh was run on 2026-09-17, after the
+two corrections the judges found (the last rows of *What broke*) (`runs/blind-case-11-2026-09-17.md`).
 
 ### What held
 
@@ -109,8 +112,8 @@ Ledgers in `runs/`, unedited. Scoring in `runs/blind-2026-09-11.md`.
 | **The split words were an extraction bug, and we defended them** | `SOURCES.md` said `s hould` and `Program me` were the PDF's own kerning, and kept them "exactly as extracted". The PDF prints `should`. pypdf invented 9 split words and 17 stray spaces, and moved two tables into the wrong sections. `check-citations.py` then rejected any run that quoted the PDF correctly. This broke our own rule that the PDF is the authority. **Found by the Comp 12 judges, who measured the glyphs. Fixed 2026-09-17:** re-extracted with pdfplumber, checked word for word against pdftotext (`_tools/check-extraction.py`). The false claim is quoted and corrected in `reference/SOURCES.md`, not deleted. Two blind runs had already reported one symptom, an empty timeline file, and nobody traced it to the extractor |
 | **The citation checker ignored the provision number** | It searched all of `reference/` for the quote. A citation changed from § II Art. 3(4) to 3(3), and then to 3(9), which does not exist, still passed. Half of `rules.md` § 2's double anchor was unguarded. **Found by the Comp 12 judges. Fixed 2026-09-17:** `reference/PROVISIONS.md` maps each provision to the exact text that holds it, and a quote must sit inside the provision it is cited to. `_tools/test-citations.py` proves that a neighbour swap, a non-existent provision and a broken map all fail. The old checker passed the first two |
 
-**Six of those were found by the auditor, not by its author. The last two were found by the
-judges.** No check in this repository could have caught them: every check compared against the
+**Most of those were found by the auditor's own runs, not by its author. The last two were
+found by the judges.** No check in this repository could have caught them: every check compared against the
 same wrong text, and the citation check tested only half of what the rule requires.
 `runs/recheck-2026-09-17.md` records how each fix was proved and what the corrected checker says
 about every earlier ledger. Each correction is dated in the file it touched, names the run or
@@ -243,6 +246,26 @@ single planted violation each. `fixtures/EXPECTED.md` says what each one should 
 Run the auditor against any fixture and compare. The control must pass silently — an auditor
 that finds problems in a clean package is worse than no auditor.
 
+`python3 _tools/stage.py <fixture>` builds a blind copy outside the repository, with the answer
+key, the fixture's name and the earlier runs left out. Open it in a fresh session and say `audit`.
+
+Three scripts check the machinery itself, not an audit:
+
+```sh
+python3 _tools/test-citations.py      # expect: "13 test(s), 0 failed"
+python3 _tools/check-citations.py --all
+python3 _tools/check-extraction.py    # needs: pip install pdfplumber, and poppler (pdftotext)
+```
+
+**`check-citations.py --all` exits 1, and that is expected.** It re-checks every ledger in
+`runs/`, and those are kept exactly as the sessions delivered them, including quotes they
+tidied and quotes that copied an extraction error this repository has since fixed. Each failure
+is broken down by cause in `runs/recheck-2026-09-17.md`. Point it at a new ledger
+(`check-citations.py runs/<file>.md`) and that ledger must come back clean.
+
+`check-extraction.py` stops with exit 3 if pdfplumber or pdftotext is missing, rather than
+reporting a result it could not compute.
+
 ## What is in here
 
 | Path | What it is |
@@ -261,4 +284,4 @@ that finds problems in a clean package is worse than no auditor.
 | `_tools/check-citations.py` | Every quote verbatim, and under the provision it is cited to (`reference/PROVISIONS.md`) |
 | `_tools/test-citations.py` | Proves that check fails a neighbour swap, a non-existent provision and a broken map |
 | `_tools/check-extraction.py` | The stored text against the PDF, by two extractors, page by page |
-| `runs/` | Committed outputs from real runs |
+| `_tools/stage.py` | Builds a blind test case outside the repository |
