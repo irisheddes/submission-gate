@@ -52,7 +52,7 @@ rather than auditing against it.
 
 ## Pointing this at a different standard
 
-`LOADING.md`, beside this file — seven steps, run **once at setup and never during an audit**.
+`LOADING.md`, beside this file — eight steps, run **once at setup and never during an audit**.
 A standard that arrives mid-run is not resident: it cannot be cited by section and cannot carry
 stable requirement IDs.
 

@@ -39,7 +39,7 @@ stays a working auditor with nothing loaded. `git checkout .` puts it back.
 It leaves `examples.md` in place and tells you so: the rows are stale the moment the standard
 goes, and rewriting them is step 8 of loading the next one.
 
-Then `reference/LOADING.md` is seven steps for pointing it at your own rulebook: a published
+Then `reference/LOADING.md` is eight steps for pointing it at your own rulebook: a published
 standard, split at its own seams, indexed, with its obligations derived and fixtures rebuilt.
 
 **Currently loaded:** Rules for Participation — BSC AI Factory Incubation Programme, Call 3
@@ -60,7 +60,15 @@ longer exists**. A clean report against a dead edition is worse than no report.
 ## Everything nine blind runs found — both directions
 
 Nine sessions that had never seen this repository. Each opened in a folder holding only the
-auditor, the standard, and one application. No answer key, no fixtures, no previous runs, no
+auditor, the standard, and one application.
+
+> **Correction, 2026-09-17: they were less blind than that sentence says.** The staged folders
+> sat inside this repository, and a session reads every `CLAUDE.md` above the folder it opens
+> in. So cases 1–11 could also read this repository's own `CLAUDE.md`, which names `fixtures/`
+> and `EXPECTED.md`, plus the instruction files of the author's workspace above it. Nothing in
+> any ledger shows a session opening the answer key, but nothing prevented it either. Found
+> while preparing this resubmission. `_tools/stage.py` now stages outside the repository and
+> refuses any folder with a `CLAUDE.md` or `AGENTS.md` above it. No answer key, no fixtures, no previous runs, no
 case name, and — for six of the nine — no notice that it was a test. Each given one word:
 **`audit`**.
 
@@ -96,7 +104,8 @@ Ledgers in `runs/`, unedited. Scoring in `runs/blind-2026-09-11.md`.
 | **A fixture was silently wrong** | Built to sit at a 10-year limit; it was 10 years 6 months, wrong the day it was written |
 | **The author's scoring was wrong once** | Two runs with matching totals read as one duplicated folder. The transcripts disproved it |
 | **One verdict boundary is unsettled** | For a datum inside an unreadable file, `NOT SUPPLIED` or `UNREADABLE`? § 9 does not say |
-| **A fixture planted two things** | Case 11 (2026-09-17) found `broken-04-sector` contradicts itself: the form says logistics, and most of the Executive Summary still describes public administration, a priority sector. The run flagged it and declined to pick. **Open.** The same run marked `R-08` `CONFIRMED` on a page count it said it had read from markdown |
+| **A fixture planted two things** | Case 11 (2026-09-17) found `broken-04-sector` contradicts itself: the form says logistics, and most of the Executive Summary still describes public administration, a priority sector. The run flagged it and declined to pick. **Fixed the same day:** the fixture's summary now describes freight logistics throughout, with `_build.py` checking it keeps every fact the other rows depend on. The same run marked `R-08` `CONFIRMED` on a page count it said it had read from markdown. That is a misreading of a correct rule, recorded, not patched |
+| **The blind runs were not fully blind** | Staged inside the repository, so every case could read the `CLAUDE.md` that routes to the answer key. See the correction above. **Fixed:** staging moved outside, with a guard |
 | **The split words were an extraction bug, and we defended them** | `SOURCES.md` said `s hould` and `Program me` were the PDF's own kerning, and kept them "exactly as extracted". The PDF prints `should`. pypdf invented 9 split words and 17 stray spaces, and moved two tables into the wrong sections. `check-citations.py` then rejected any run that quoted the PDF correctly. This broke our own rule that the PDF is the authority. **Found by the Comp 12 judges, who measured the glyphs. Fixed 2026-09-17:** re-extracted with pdfplumber, checked word for word against pdftotext (`_tools/check-extraction.py`). The false claim is quoted and corrected in `reference/SOURCES.md`, not deleted. Two blind runs had already reported one symptom, an empty timeline file, and nobody traced it to the extractor |
 | **The citation checker ignored the provision number** | It searched all of `reference/` for the quote. A citation changed from § II Art. 3(4) to 3(3), and then to 3(9), which does not exist, still passed. Half of `rules.md` § 2's double anchor was unguarded. **Found by the Comp 12 judges. Fixed 2026-09-17:** `reference/PROVISIONS.md` maps each provision to the exact text that holds it, and a quote must sit inside the provision it is cited to. `_tools/test-citations.py` proves that a neighbour swap, a non-existent provision and a broken map all fail. The old checker passed the first two |
 

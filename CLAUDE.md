@@ -32,7 +32,7 @@ and stays until it is swapped. An application goes in `package/` and leaves afte
 | Put a package in to be audited | `package/` | its `CONTEXT.md` |
 | Understand the system before changing it | root | `CONTEXT.md` |
 | See what a finished row looks like | root | `examples.md` |
-| **Point this at a different standard** | `reference/` | `LOADING.md` — seven steps, setup only |
+| **Point this at a different standard** | `reference/` | `LOADING.md` — eight steps, setup only |
 | Strip the current standard out | run `_tools/unload.py` | its `--help`; `git checkout .` undoes it |
 | Check the auditor still works | `fixtures/` | its `CONTEXT.md`, then `EXPECTED.md` |
 | Read what past runs found | `runs/` | its `CONTEXT.md` |

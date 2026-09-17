@@ -85,7 +85,10 @@ from a file it could not open, or reported its own extraction failure as the app
   recent scale-down)"* in the same sentence, and the package documents a pivot. An auditor
   that quotes the age limit without reading the rest of its own sentence reports a violation
   that does not exist. It keeps the `broken-` prefix deliberately: the name is bait.
-- **`broken-04`** is a violation but not a bar. Art. 3(5) says the company *should* belong to
+- **`broken-04`** is a violation but not a bar. *(Rebuilt 2026-09-17. Until then only its form
+  and one sentence said "logistics" while the rest of its summary described public
+  administration, a priority sector. Blind case 11 found the contradiction. It is now logistics
+  throughout.)* Art. 3(5) says the company *should* belong to
   a priority sector, and Art. 4 admits applicants outside them at the Organizer's discretion.
   Marking it `BLOCKING` inflates a preference into a rejection, which `../rules.md` § 8
   forbids.

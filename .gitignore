@@ -17,4 +17,6 @@ package/*
 
 # Cold-run ledgers carry numbers only, never package content — see runs/CONTEXT.md.
 # They ARE committed. Nothing to ignore here; this note exists so nobody adds one.
+# Blind cases are staged outside the repository since 2026-09-17 (see _tools/stage.py).
+# The old in-repo location stays ignored in case an old clone still has one.
 _stage/

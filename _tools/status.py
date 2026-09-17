@@ -81,7 +81,11 @@ held = [p for p in PKG.iterdir() if p.name not in ("CONTEXT.md", ".gitkeep")] if
 print(f"\n   package/          {len(held)} file(s) awaiting audit" if held else "\n   package/          empty")
 
 # a staged copy older than the auditor would test a version that no longer exists
-stage = R/"_stage"
+import os
+stage = pathlib.Path(os.environ.get("SUBMISSION_GATE_STAGE") or pathlib.Path.home()/"submission-gate-stage")
+if (R/"_stage").exists() and any(d.is_dir() for d in (R/"_stage").iterdir()):
+    print(f"\n   {WARN} cases staged inside the repository, in _stage/. A session there reads this")
+    print(f"       repository's CLAUDE.md, which routes to the answer key. Collect, then remove them.")
 if stage.exists():
     stale = []
     for c in sorted(d for d in stage.iterdir() if d.is_dir()):
@@ -90,7 +94,7 @@ if stage.exists():
             if b.exists() and a.read_text() != b.read_text():
                 stale.append(f"{c.name}/{f}"); break
     cases = [d for d in stage.iterdir() if d.is_dir() and d.name.startswith("case-")]
-    print(f"\n   _stage/          {len(cases)} case(s) staged")
+    print(f"\n   stage            {len(cases)} case(s) staged in {stage}")
     if stale:
         print(f"   {WARN} STALE - the auditor changed after staging: {', '.join(stale)}")
         print(f"       Re-stage before running, or the run tests a version that no longer exists.")
