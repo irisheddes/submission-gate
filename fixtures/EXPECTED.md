@@ -42,8 +42,15 @@ video. The earlier expectation of `PASS · TO CHECK` credited the applicant for 
 nobody had.
 
 **Confidence is part of the expected result.** `R-08` (page count) is *declared* by the
-markdown fixtures and cannot be measured in them, so `rules.md` § 7 requires `TO CHECK`. An auditor returning `CONFIRMED` on either has overstated what it checked,
-and passes only because it was not asked the right question. The readiness half of `R-03` is
+markdown fixtures and cannot be measured in them, so this key expects `TO CHECK`.
+
+> **Open, found 2026-09-17: `rules.md` does not say this.** This page used to claim that
+> `rules.md` § 7 requires `TO CHECK` here. It does not. § 7 gives `TO CHECK` to a provision not
+> re-read, or one whose scope is ambiguous, and says nothing about evidence that is declared
+> rather than measured. Blind cases 11 and 12 both returned `R-08` `CONFIRMED` and applied § 7
+> as written. The expectation stays, because a page count nobody counted should not be
+> confirmed. But it is this key's expectation, not a rule, until `rules.md` says it and the
+> fixtures are re-run against the change. The readiness half of `R-03` is
 `TO CHECK` for a different reason — see `../reference/REQUIREMENTS.md`.
 
 The control is not a soft pass: `R-08` sits **exactly at** the 5-page maximum and `R-09` at
@@ -119,8 +126,9 @@ comment thread for this round; we are using it as given rather than reinventing 
 
 - **Real file properties.** A repository cannot hold a video, and markdown has no pages. The
   Presentation Video declares its duration and the Executive Summary declares its page count;
-  the auditor audits the declaration and cannot measure either. `../rules.md` § 7 requires
-  `TO CHECK` where material cannot be verified, and `R-08`/`R-09` are exactly that case.
+  the auditor audits the declaration and cannot measure either. This key expects `TO CHECK`
+  there, but no rule in `../rules.md` requires it yet (see *Confidence is part of the expected
+  result*, above).
 - **Multiple simultaneous violations.** Every fixture carries one, so a miss is unambiguous.
   A real package with four interacting problems is not represented here.
 - **Sections IV, V, VII and Annex 1.** Those bind a participant after admission; nothing in an

@@ -96,6 +96,26 @@ def load_map(ref=REF):
     return spans, sections
 
 
+def printed_to_short(s):
+    """Read a citation written the way a standard prints it as the map's short form.
+
+    "SECTION II, Article 3, criterion 5 (Sector Priority)" -> "§ II Art. 3(5) (Sector Priority)"
+    "SECTION III, Article 6, 6.1"                           -> "§ III Art. 6.1"
+
+    rules.md asks for the number "as printed on the standard" and fixes no notation, so both
+    forms are correct. Until 2026-09-17 only the short one was accepted, and blind case 12, which
+    wrote the long one with every quote in the right place, failed 13 of 14 citations. Only the
+    words change here; the numbers are kept, so a criterion or clause that does not exist still
+    fails.
+    """
+    s = re.sub(r"\bSECTION\s+([IVXLC]+)\b", r"§ \1", s)
+    s = re.sub(r"\bArticle\s+(\d)", r"Art. \1", s)
+    s = re.sub(r"(§ [IVXLC]+),\s*(Art\.)", r"\1 \2", s)
+    s = re.sub(r"\bArt\. (\d+),\s*\1\.(\d+)", r"Art. \1.\2", s)       # Article 6, 6.1 -> Art. 6.1
+    s = re.sub(r"\bArt\. (\d+(?:\.\d+)?),\s*(?:criterion|point|paragraph)\s+(\w+)", r"Art. \1(\2)", s)
+    return s
+
+
 def provision_in(segment, keys):
     """The provision a stretch of text names, or why it names none.
 
@@ -107,7 +127,7 @@ def provision_in(segment, keys):
     fail rather than silently inherit the provision before them, which would report the quote
     as cited to something the run never wrote.
     """
-    s = norm(segment.replace("*", "").replace("`", ""))
+    s = printed_to_short(norm(segment.replace("*", "").replace("`", "")))
     best = None
     for k in keys:
         i = s.find(k)

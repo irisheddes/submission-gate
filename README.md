@@ -107,7 +107,8 @@ two corrections the judges found (the last rows of *What broke*) (`runs/blind-ca
 | **A fixture was silently wrong** | Built to sit at a 10-year limit; it was 10 years 6 months, wrong the day it was written |
 | **The author's scoring was wrong once** | Two runs with matching totals read as one duplicated folder. The transcripts disproved it |
 | **One verdict boundary is unsettled** | For a datum inside an unreadable file, `NOT SUPPLIED` or `UNREADABLE`? § 9 does not say |
-| **A fixture planted two things** | Case 11 (2026-09-17) found `broken-04-sector` contradicts itself: the form says logistics, and most of the Executive Summary still describes public administration, a priority sector. The run flagged it and declined to pick. **Fixed the same day:** the fixture's summary now describes freight logistics throughout, with `_build.py` checking it keeps every fact the other rows depend on. The same run marked `R-08` `CONFIRMED` on a page count it said it had read from markdown. That is a misreading of a correct rule, recorded, not patched |
+| **A fixture planted two things** | Case 11 (2026-09-17) found `broken-04-sector` contradicts itself: the form says logistics, and most of the Executive Summary still describes public administration, a priority sector. The run flagged it and declined to pick. **Fixed the same day:** the fixture's summary now describes freight logistics throughout, with `_build.py` checking it keeps every fact the other rows depend on. Blind case 12 ran the rebuilt fixture and found no contradiction |
+| **The answer key cited a rule that does not exist** | `EXPECTED.md` said `rules.md` § 7 requires `TO CHECK` for a page count the package only declares. § 7 does not say that. Cases 11 and 12 both returned `CONFIRMED` and were following § 7 as written. *(An earlier version of this row called that "a misreading of a correct rule". It was not.)* **Open.** Adding the rule means re-running the fixtures it can affect, so the key now says it is an expectation, not a rule. Case 12 also caught `REQUIREMENTS.md` misquoting Art. 3(3) ("or" for "and"). **Fixed** |
 | **The blind runs were not fully blind** | Staged inside the repository, so every case could read the `CLAUDE.md` that routes to the answer key. See the correction above. **Fixed:** staging moved outside, with a guard |
 | **The split words were an extraction bug, and we defended them** | `SOURCES.md` said `s hould` and `Program me` were the PDF's own kerning, and kept them "exactly as extracted". The PDF prints `should`. pypdf invented 9 split words and 17 stray spaces, and moved two tables into the wrong sections. `check-citations.py` then rejected any run that quoted the PDF correctly. This broke our own rule that the PDF is the authority. **Found by the Comp 12 judges, who measured the glyphs. Fixed 2026-09-17:** re-extracted with pdfplumber, checked word for word against pdftotext (`_tools/check-extraction.py`). The false claim is quoted and corrected in `reference/SOURCES.md`, not deleted. Two blind runs had already reported one symptom, an empty timeline file, and nobody traced it to the extractor |
 | **The citation checker ignored the provision number** | It searched all of `reference/` for the quote. A citation changed from § II Art. 3(4) to 3(3), and then to 3(9), which does not exist, still passed. Half of `rules.md` § 2's double anchor was unguarded. **Found by the Comp 12 judges. Fixed 2026-09-17:** `reference/PROVISIONS.md` maps each provision to the exact text that holds it, and a quote must sit inside the provision it is cited to. `_tools/test-citations.py` proves that a neighbour swap, a non-existent provision and a broken map all fail. The old checker passed the first two |
@@ -193,8 +194,9 @@ row rather than being quietly dropped.
 ## What this auditor cannot catch
 
 - **Anything measured rather than stated.** Page counts and video durations are read from what
-  the package declares. It cannot open a PDF and count, or play a file and time it. Every such
-  row carries `TO CHECK`, and an auditor confident about them is lying.
+  the package declares. It cannot open a PDF and count, or play a file and time it. Such a row
+  should carry `TO CHECK`. **But no rule says so yet.** Two blind runs marked a declared page
+  count `CONFIRMED`, and `rules.md` § 7 as written allowed it. See *What broke*.
 - **Readiness level (`R-03b`).** The defining document is outside `reference/`. See above.
 - **Whether a claim is true.** It checks that a package says what the standard requires and that
   the statement is present and located. It has no way to know whether the company really has
@@ -252,7 +254,7 @@ key, the fixture's name and the earlier runs left out. Open it in a fresh sessio
 Three scripts check the machinery itself, not an audit:
 
 ```sh
-python3 _tools/test-citations.py      # expect: "13 test(s), 0 failed"
+python3 _tools/test-citations.py      # expect: "0 failed"
 python3 _tools/check-citations.py --all
 python3 _tools/check-extraction.py    # needs: pip install pdfplumber, and poppler (pdftotext)
 ```

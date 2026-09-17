@@ -47,7 +47,7 @@ does not.**
 | `R-01` | The company is legally incorporated and has its own tax identification number in the European Union | § II Art. 3(1) | must | `BLOCKING` |
 | `R-02` | Between 0 and 10 years since legal incorporation — **unless justified** (e.g. pivot, new AI product line, recent scale-down) | § II Art. 3(2) | must, with named exception | `BLOCKING` only where no justification is offered; otherwise `NON-CONFORMANT` |
 | `R-03` | Demonstrates intensive use, development or investment in AI Technologies (e.g. trained models, annotated datasets, validated algorithms) | § II Art. 3(3), first sentence | must | `BLOCKING` |
-| `R-03b` | Projects are at Medium or High Readiness Level, as determined in the One-Stop Shop User Journey | § II Art. 3(3), second sentence | **should** | `NON-CONFORMANT` — and **never `CONFIRMED`**, see below |
+| `R-03b` | Projects are at Medium and High Readiness Level, as determined in the One-Stop Shop User Journey | § II Art. 3(3), second sentence | **should** | `NON-CONFORMANT` — and **never `CONFIRMED`**, see below |
 | `R-04` | The company has fewer than 20 employees | § II Art. 3(4) | must | `BLOCKING` |
 | `R-05` | The company belongs to one of the priority sectors: Health, Agriculture & Climate, Finance & Legal, Policy Making & Public Administration, Communication & Media, Energy | § II Art. 3(5) | **should** | `NON-CONFORMANT` — never `BLOCKING`. § II Art. 4 admits applicants outside these sectors at the Organizer's discretion |
 | `R-06` | A minimum of 1 employee is available in person at the offices at least 3 times per week | § II Art. 3(6) | must | `BLOCKING` |
@@ -71,7 +71,9 @@ does not.**
 - **`R-03b` cites a definition this folder does not hold.** Art. 3(3) defines the readiness
   levels by pointing at the One-Stop Shop User Journey at an external URL. `rules.md` § 1 makes
   `reference/` the only authority, so readiness can be raised but never `CONFIRMED` — every
-  `R-03b` row carries `TO CHECK` and names the missing document. Splitting it from `R-03` keeps
+  `R-03b` row carries `TO CHECK` and names the missing document. *(Until 2026-09-17 this list
+  said "Medium **or** High". The standard prints "Medium **and** High". Blind case 12 quoted
+  the standard instead and pointed out the difference.)* Splitting it from `R-03` keeps
   one unverifiable half from dragging a verifiable one down with it.
 - **`R-11` names its own mechanism.** Most "mandatory" labels in a document list are not a
   bar (`rules.md` § 6 forbids treating them as one). This one is: *"a mandatory condition to
